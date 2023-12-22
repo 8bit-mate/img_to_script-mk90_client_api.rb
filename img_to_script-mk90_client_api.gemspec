@@ -4,7 +4,7 @@ require_relative "lib/img_to_script/mk90_client_api/version"
 
 Gem::Specification.new do |spec|
   spec.name = "img_to_script-mk90_client_api"
-  spec.version = ImgToScript::MK90ClientApi::VERSION
+  spec.version = ImgToScript::MK90ClientAPI::VERSION
   spec.authors = ["8bit-m8"]
   spec.email = ["you@example.com"]
 

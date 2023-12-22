@@ -1,4 +1,4 @@
-# ImgToScript::MK90ClientApi
+# ImgToScript::MK90ClientAPI
 
 TODO: Delete this and the text below, and describe your gem
 

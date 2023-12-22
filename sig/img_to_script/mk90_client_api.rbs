@@ -1,0 +1,6 @@
+module ImgToScript
+  module MK90ClientApi
+    VERSION: String
+    # See the writing guide of rbs: https://github.com/ruby/rbs#guides
+  end
+end

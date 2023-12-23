@@ -11,6 +11,8 @@ ImgToScript::MK90ClientAPI::Autoloader.setup
 module ImgToScript
   module MK90ClientAPI
     class Error < StandardError; end
+
+    class QueryError < Error; end
     # Your code goes here...
 
     def self.call(query)

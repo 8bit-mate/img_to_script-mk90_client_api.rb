@@ -9,13 +9,8 @@ module ImgToScript
     end
 
     def test_empty_query
-      p ImgToScript::MK90ClientAPI.call(
-        {
-          basic_version: "wjhdj",
-          formatter_options: {
-            line_offset: nil
-          }
-        }
+      ImgToScript::MK90ClientAPI.call(
+        {}
       )
     end
   end

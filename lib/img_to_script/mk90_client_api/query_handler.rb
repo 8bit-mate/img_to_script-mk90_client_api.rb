@@ -7,11 +7,16 @@ module ImgToScript
     #
     class QueryHandler
       #
-      # <Description>
+      # Handle query:
+      # 1. validate input query;
+      # 2. if query is correct: configure and call an ImgToScript
+      #    task instance;
+      # 3. return result of the ImgToScript::Task call.
       #
-      # @param [<Type>] query <description>
+      # @param [Hash{ String => Object}] query
       #
-      # @return [<Type>] <description>
+      # @return [Array<String>]
+      #   Generated BASIC script.
       #
       def call(query)
         _validate_input(query)
@@ -27,12 +32,12 @@ module ImgToScript
       # @return [Hash{ String => Object}] query
       #   Unmodified query if it passed all validations.
       #
-      # @raise [ArgumentError]
+      # @raise [ImgToScript::MK90ClientAPI::QueryError]
       #
       def _validate_input(query)
         result = QueryContract.new.call(query)
 
-        raise ArgumentError, result.errors.to_h.first.join(": ") unless result.success?
+        raise QueryError, result.errors.to_h.first.join(": ") unless result.success?
 
         query
       end

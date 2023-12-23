@@ -8,7 +8,7 @@ module ImgToScript
     class Autoloader
       class << self
         def setup
-          loader = Zeitwerk::Loader.new #.for_gem
+          loader = Zeitwerk::Loader.new
           loader.push_dir(Pathname(__dir__).join("../../")) # lib
           loader.inflector.inflect(
             "mk90_client_api" => "MK90ClientAPI"

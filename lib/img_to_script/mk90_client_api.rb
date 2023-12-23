@@ -14,9 +14,7 @@ module ImgToScript
     # Your code goes here...
 
     def self.call(query)
-      validation_result = QueryContract.new.call(query)
-
-      validation_result.errors.to_h unless validation_result.success?
+      QueryHandler.new.call(query)
     end
   end
 end

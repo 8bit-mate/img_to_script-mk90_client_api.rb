@@ -9,9 +9,9 @@ module ImgToScript
     end
 
     def test_empty_query
-      ImgToScript::MK90ClientAPI.call(
-        {}
-      )
+      assert_raises ImgToScript::MK90ClientAPI::QueryError do
+        ImgToScript::MK90ClientAPI.call({})
+      end
     end
   end
 end

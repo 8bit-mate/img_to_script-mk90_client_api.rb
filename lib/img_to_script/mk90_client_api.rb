@@ -18,6 +18,13 @@ module ImgToScript
 
     class QueryError < Error; end
 
+    #
+    # <Description>
+    #
+    # @param [Hash{ Symbol => Object}, Hash{ String => Object }] query
+    #
+    # @return [Array<String>]
+    #
     def self.call(query)
       QueryHandler.new.call(query)
     end

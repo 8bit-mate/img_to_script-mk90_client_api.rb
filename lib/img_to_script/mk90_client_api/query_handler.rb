@@ -13,18 +13,22 @@ module ImgToScript
       #    task instance;
       # 3. return result of the ImgToScript::Task call.
       #
-      # @param [Hash{ String => Object}] query
+      # @param [Hash{ Symbol => Object }, Hash{ String => Object }] query
       #
       # @return [Array<String>]
       #   Generated BASIC script.
       #
       def call(query)
-        _validate_input(query)
+        valid_query = _validate_input(query)
 
-        task = _init_task(query)
+        task = _init_task(valid_query)
+
+        image = _prepare_image(
+          _read_image(valid_query[:image], valid_query[:image_type])
+        )
 
         task.run(
-          image: _prepare_image(query[:image]),
+          image: image,
           scr_width: ImgToScript::Languages::MK90Basic::SCR_WIDTH,
           scr_height: ImgToScript::Languages::MK90Basic::SCR_HEIGHT
         )
@@ -35,10 +39,9 @@ module ImgToScript
       #
       # Validate input query.
       #
-      # @param [Hash{ String => Object}] query
+      # @param [Hash{ Symbol => Object }, Hash{ String => Object }] query
       #
-      # @return [Hash{ String => Object}] query
-      #   Unmodified query if it passed all validations.
+      # @return [Hash{ Symbol => Object }] result.schema_result.output
       #
       # @raise [ImgToScript::MK90ClientAPI::QueryError]
       #
@@ -47,7 +50,40 @@ module ImgToScript
 
         raise QueryError, result.errors.to_h.first.join(": ") unless result.success?
 
-        query
+        result.schema_result.output
+      end
+
+      #
+      # Read image from the query.
+      #
+      # @param [String, BinMagick::Image] image_object
+      #   Base64 string or BinMagick::Image.
+      #
+      # @param [String] image_type
+      #   Defines image type.
+      #
+      # @return [BinMagick::Image]
+      #
+      def _read_image(image_object, image_type)
+        case image_type
+        when "base64"
+          _base64_to_img(image_object)
+        when "bin_magick"
+          image_object
+        end
+      end
+
+      #
+      # Convert a base64-encoded string into a BinMagick image object.
+      #
+      # @param [String] base64_str
+      #
+      # @return [Magick::BinMagick::Image]
+      #
+      def _base64_to_img(base64_str)
+        Magick::BinMagick::Image.new(
+          Magick::Image.read_inline(base64_str).first
+        )
       end
 
       #

@@ -21,8 +21,9 @@ module ImgToScript
 
     #
     # Test minimal query - without optional generator & formatter config.
+    # Symbolic keys.
     #
-    def test_valid_query_minimal
+    def test_valid_query_minimal_symbolic
       image = read_image
 
       script = ImgToScript::MK90ClientAPI.call(
@@ -31,6 +32,43 @@ module ImgToScript
           encoding_method: "hex_mask_enhanced",
           image: image,
           image_type: "bin_magick",
+          output_format: "bas"
+        }
+      )
+
+      assert_equal ["1CLS:DRAWMFF", "2FORI=1TO100:WAIT1024:NEXTI"], script
+    end
+
+    #
+    # Test with strings keys.
+    #
+    def test_valid_query_minimal_strings
+      image = read_image
+
+      script = ImgToScript::MK90ClientAPI.call(
+        {
+          "basic_version" => "1.0",
+          "encoding_method" => "hex_mask_enhanced",
+          "image" => image,
+          "image_type" => "bin_magick",
+          "output_format" => "bas"
+        }
+      )
+
+      assert_equal ["1CLS:DRAWMFF", "2FORI=1TO100:WAIT1024:NEXTI"], script
+    end
+
+    def test_valid_query_minimal_base64
+      # rubocop:disable Layout/LineLength
+      image = "iVBORw0KGgoAAAANSUhEUgAAAHgAAABACAYAAADRTbMSAAABbklEQVR4Xu3RMQoAIRAEwfX/j97zA2fW0EELRuIwTJ2Z2Xt/z+7z+fW1N8EC5wImKICgKgRMLSvJDVgCQdUImFpWkhuwBIKqETC1rCQ3YAkEVSNgallJbsASCKpGwNSyktyAJRBUjYCpZSW5AUsgqBoBU8tKcgOWQFA1AqaWleQGLIGgagRMLSvJDVgCQdUImFpWkhuwBIKqETC1rCQ3YAkEVSNgallJbsASCKpGwNSyktyAJRBUjYCpZSW5AUsgqBoBU8tKcgOWQFA1AqaWleQGLIGgagRMLSvJDVgCQdUImFpWkhuwBIKqETC1rCQ3YAkEVSNgallJbsASCKpGwNSyktyAJRBUjYCpZSW5AUsgqBoBU8tKcgOWQFA1AqaWleQGLIGgagRMLSvJDVgCQdUImFpWkhuwBIKqETC1rCQ3YAkEVSNgallJbsASCKpGwNSyktyAJRBUjYCpZSW5AUsgqBoBU8tKcgOWQFA1PuAN/0GHcndnAAAAAElFTkSuQmCC"
+      # rubocop:enable Layout/LineLength
+
+      script = ImgToScript::MK90ClientAPI.call(
+        {
+          basic_version: "1.0",
+          encoding_method: "hex_mask_enhanced",
+          image: image,
+          image_type: "base64",
           output_format: "bas"
         }
       )

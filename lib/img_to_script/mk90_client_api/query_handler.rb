@@ -50,6 +50,15 @@ module ImgToScript
         query
       end
 
+      #
+      # Prepare the image: resize and convert to binary.
+      #
+      # @param [Magick::BinMagick::Image] image
+      #   Original image.
+      #
+      # @return [Magick::BinMagick::Image]
+      #   Edited image.
+      #
       def _prepare_image(image)
         ImageProcessor.new.call(image: image)
       end
@@ -67,6 +76,10 @@ module ImgToScript
         translator = _init_translator(query[:basic_version])
         @formatter = _init_formatter
 
+        _configure_generator(query[:generator_options]) if query[:generator_options]
+        _configure_formatter(query[:formatter_options]) if query[:formatter_options]
+
+
         ImgToScript::Task.new(
           generator: @generator,
           translator: translator,
@@ -74,6 +87,13 @@ module ImgToScript
         )
       end
 
+      #
+      # Init. generator object
+      #
+      # @param [String] name
+      #
+      # @return [Object]
+      #
       def _init_generator(name)
         case name
         when "hex_mask_enhanced"
@@ -95,6 +115,13 @@ module ImgToScript
         end
       end
 
+      #
+      # Init. translator object
+      #
+      # @param [String] basic_version
+      #
+      # @return [Object]
+      #
       def _init_translator(basic_version)
         case basic_version
         when "1.0"
@@ -108,12 +135,22 @@ module ImgToScript
         ImgToScript::Languages::MK90Basic::Formatters::Minificator.new
       end
 
+      #
+      # Configure @generator object.
+      #
+      # @param [Hash{ Symbol => Object }] params
+      #
       def _configure_generator(params)
         @generator.configure do |config|
           params.each { |key, value| config.send("#{key}=", value) }
         end
       end
 
+      #
+      # Configure @formatter object.
+      #
+      # @param [Hash{ Symbol => Object }] params
+      #
       def _configure_formatter(params)
         @formatter.configure do |config|
           params.each { |key, value| config.send("#{key}=", value) }

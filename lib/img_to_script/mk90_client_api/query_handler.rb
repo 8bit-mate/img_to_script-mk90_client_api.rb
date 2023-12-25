@@ -102,7 +102,7 @@ module ImgToScript
       #
       # Init. and configure a comvertion task.
       #
-      # @param [Hash{ String => Object}] query
+      # @param [Hash{ Symbol => Object }] query
       #
       # @return [ImgToScript::Task] task
       #   Configured task object.

@@ -21,7 +21,7 @@ module ImgToScript
       def call(query)
         _validate_input(query)
 
-        task = _configure_task(query)
+        task = _init_task(query)
 
         task.run(
           image: _prepare_image(query[:image]),
@@ -64,21 +64,20 @@ module ImgToScript
       end
 
       #
-      # Configure comvertion task.
+      # Init. and configure a comvertion task.
       #
       # @param [Hash{ String => Object}] query
       #
       # @return [ImgToScript::Task] task
       #   Configured task object.
       #
-      def _configure_task(query)
+      def _init_task(query)
         @generator = _init_generator(query[:encoding_method])
         translator = _init_translator(query[:basic_version])
         @formatter = _init_formatter
 
         _configure_generator(query[:generator_options]) if query[:generator_options]
         _configure_formatter(query[:formatter_options]) if query[:formatter_options]
-
 
         ImgToScript::Task.new(
           generator: @generator,

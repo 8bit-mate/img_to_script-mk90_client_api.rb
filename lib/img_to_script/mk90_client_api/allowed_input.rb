@@ -20,6 +20,10 @@ module ImgToScript
         segmental_data_v
         segmental_data_h
       ].freeze
+      IMAGE_TYPE = %w[
+        base64
+        bin_magick
+      ].freeze
       OUTPUT_FORMAT = %w[
         bas
       ].freeze

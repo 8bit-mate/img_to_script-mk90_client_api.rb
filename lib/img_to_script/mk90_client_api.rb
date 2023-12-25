@@ -9,11 +9,14 @@ require_relative "mk90_client_api/version"
 ImgToScript::MK90ClientAPI::Autoloader.setup
 
 module ImgToScript
+  #
+  # Provides an API between a img_to_mk90_bas client app,
+  # and the img_to_script lib.
+  #
   module MK90ClientAPI
     class Error < StandardError; end
 
     class QueryError < Error; end
-    # Your code goes here...
 
     def self.call(query)
       QueryHandler.new.call(query)

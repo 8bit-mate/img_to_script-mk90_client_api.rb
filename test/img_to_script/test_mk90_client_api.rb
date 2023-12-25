@@ -30,6 +30,7 @@ module ImgToScript
           basic_version: "1.0",
           encoding_method: "hex_mask_enhanced",
           image: image,
+          image_type: "bin_magick",
           output_format: "bas"
         }
       )
@@ -45,6 +46,7 @@ module ImgToScript
           basic_version: "1.0",
           encoding_method: "hex_mask_enhanced",
           image: image,
+          image_type: "bin_magick",
           output_format: "bas",
           generator_options: {
             y_offset: 10
@@ -63,6 +65,7 @@ module ImgToScript
           basic_version: "1.0",
           encoding_method: "hex_mask_enhanced",
           image: image,
+          image_type: "bin_magick",
           output_format: "bas",
           formatter_options: {
             line_offset: 10,
@@ -82,6 +85,7 @@ module ImgToScript
           basic_version: "1.0",
           encoding_method: "hex_mask_enhanced",
           image: image,
+          image_type: "bin_magick",
           output_format: "bas",
           generator_options: {
             y_offset: 10

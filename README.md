@@ -1,6 +1,6 @@
 # img_to_script-mk90_client_api
 
-Provides a handy API between an img_to_mk90_bas application and the **[img_to_script](https://github.com/8bit-mate/img_to_script.rb)** gem. Instead of working with the img_to_script objects directly, just pass a hash with parameters. This is handy when you get the parameters as a JSON string, e.g. from a web front-end.
+Provides a handy API between an img_to_mk90_bas application and the **[img_to_script](https://github.com/8bit-mate/img_to_script.rb)** gem. Instead of working with the img_to_script objects directly, just pass a hash with parameters to the img_to_script-mk90_client_api. This is handy when you get the parameters as a JSON string, e.g. from a web front-end.
 
 ## Installation
 

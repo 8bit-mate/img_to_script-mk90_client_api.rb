@@ -6,16 +6,16 @@ module ImgToScript
     # Sets rules for the generator options input data.
     #
     class GeneratorOptionsContract < AppContract
-      params do
+      json do
         optional(:x_offset).value(
           :integer,
-          gt?: AllowedInput::X_OFFSET_MIN,
-          lt?: AllowedInput::X_OFFSET_MAX
+          gteq?: AllowedInput::X_OFFSET_MIN,
+          lteq?: AllowedInput::X_OFFSET_MAX
         )
         optional(:y_offset).value(
           :integer,
-          gt?: AllowedInput::Y_OFFSET_MIN,
-          lt?: AllowedInput::Y_OFFSET_MAX
+          gteq?: AllowedInput::Y_OFFSET_MIN,
+          lteq?: AllowedInput::Y_OFFSET_MAX
         )
         optional(:clear_screen).value(:bool)
         optional(:pause_program).value(:bool)

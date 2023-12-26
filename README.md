@@ -1,24 +1,92 @@
-# ImgToScript::MK90ClientAPI
+# img_to_script-mk90_client_api
 
-TODO: Delete this and the text below, and describe your gem
-
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/img_to_script/mk90_client_api`. To experiment with that code, run `bin/console` for an interactive prompt.
+Provides a handy API between an img_to_mk90_bas application and the **[img_to_script](https://github.com/8bit-mate/img_to_script.rb)** gem. Instead of working with the img_to_script objects directly, just pass a hash with parameters.
 
 ## Installation
 
-TODO: Replace `UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG` with your gem name right after releasing it to RubyGems.org. Please do not do it earlier due to security reasons. Alternatively, replace this section with instructions to install your gem from git if you don't plan to release to RubyGems.org.
+Add this line to your application's Gemfile:
 
-Install the gem and add to the application's Gemfile by executing:
+```ruby
+gem "img_to_script-mk90_client_api"
+```
 
-    $ bundle add UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG
+And then execute:
 
-If bundler is not being used to manage dependencies, install the gem by executing:
+    $ bundle install
 
-    $ gem install UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG
+Or install it yourself as:
+
+    $ gem install img_to_script-mk90_client_api
 
 ## Usage
 
-TODO: Write usage instructions here
+ImgToScript::MK90ClientAPI.call(query) -> Array\<String\>
+
+### Argument
+
+**query**: hash with parameters.
+
+### Returns
+
+Generated BASIC program.
+
+## Query description
+
+| Key           | Type          | Necessity | Description   | Allowed values
+| ------------- | ------------- | --------- | ------------- | ---------------
+| :basic_version | String | Required | Defines target BASIC version | <ul><li>1.0</li><li>2.0</li></ul>
+| :encoding_method | String | Required | Defines target encoding method | <ul><li>hex_mask_enhanced</li><li>hex_mask_default</li><li>rle_v</li><li>rle_h</li><li>segmental_direct_v</li><li>segmental_direct_h</li><li>segmental_data_v</li><li>segmental_data_h</li></ul>
+| :image | String | Required | Image to convert | A base64-encoded image
+| :output_format | String |  Required | Defines output format | <ul><li>bas</li></ul>
+| :generator_options | Hash{ Symbol => Object } |  Optional | Defines script generator options | -
+| :formatter_options | Hash{ Symbol => Object } |  Optional | Defines script formatter options | -
+
+### Generator options
+
+| Key           | Type          | Necessity | Description   | Allowed values
+| ------------- | ------------- | --------- | ------------- | ---------------
+| :x_offset | Integer | Optional | Defines image horizontal offset | -120..120
+| :y_offset | Integer | Optional | Defines image vertical offset | -64..64
+| :clear_screen | Boolean | Optional | Add a clear screen statement | true/false
+| :pause_program | Boolean |  Optional | Add a pause statement | true/false
+
+### Formatter options
+
+| Key           | Type          | Necessity | Description   | Allowed values
+| ------------- | ------------- | --------- | ------------- | ---------------
+| :line_offset | Integer | Optional | Defines first BASIC line offset | 1..8000
+| :line_step | Integer | Optional | Defines step between BASIC lines | 1..100
+
+## Usage example
+
+```ruby
+require "img_to_script-mk90_client_api"
+
+def self.read_image(filename)
+  img = Magick::BinMagick::Image.from_file(filename)
+  img.colorspace = Magick::GRAYColorspace
+  Base64.strict_encode64(
+    img.to_blob
+  )
+end
+
+script = ImgToScript::MK90ClientAPI.call(
+  {
+    basic_version: "1.0",
+    encoding_method: "hex_mask_enhanced",
+    image: read_image("my_image.png"),
+    output_format: "bas",
+    generator_options: {
+      y_offset: -5,
+      y_offset: -10
+    },
+    formatter_options: {
+      line_offset: 10,
+      line_step: 5
+    }
+  }
+)
+```
 
 ## Development
 
@@ -28,7 +96,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/img_to_script-mk90_client_api.
+Bug reports and pull requests are welcome on GitHub at https://github.com/8bit-mate/img_to_script-mk90_client_api.rb.
 
 ## License
 

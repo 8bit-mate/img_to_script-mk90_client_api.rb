@@ -24,7 +24,7 @@ module ImgToScript
         task = _init_task(valid_query)
 
         image = _prepare_image(
-          _read_image(valid_query[:image], valid_query[:image_type])
+          _read_image(valid_query[:image])
         )
 
         task.run(
@@ -42,6 +42,7 @@ module ImgToScript
       # @param [Hash{ Symbol => Object }, Hash{ String => Object }] query
       #
       # @return [Hash{ Symbol => Object }] result.schema_result.output
+      #   Validated hash with symbolic keys.
       #
       # @raise [ImgToScript::MK90ClientAPI::QueryError]
       #
@@ -54,23 +55,14 @@ module ImgToScript
       end
 
       #
-      # Read image from the query.
+      # Read a base64-encoded image from the query.
       #
-      # @param [String, BinMagick::Image] image_object
-      #   Base64 string or BinMagick::Image.
-      #
-      # @param [String] image_type
-      #   Defines image type.
+      # @param [String] base64_string
       #
       # @return [BinMagick::Image]
       #
-      def _read_image(image_object, image_type)
-        case image_type
-        when "base64"
-          _base64_to_img(image_object)
-        when "bin_magick"
-          image_object
-        end
+      def _read_image(base64_string)
+        _base64_to_img(base64_string)
       end
 
       #

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require "base64"
 require "dry/validation"
 require "img_to_script"
 require "zeitwerk"

@@ -1,6 +1,6 @@
 # img_to_script-mk90_client_api
 
-Provides a handy API between an img_to_mk90_bas application and the **[img_to_script](https://github.com/8bit-mate/img_to_script.rb)** gem. Instead of working with the img_to_script objects directly, just pass a hash with parameters.
+Provides a handy API between an img_to_mk90_bas application and the **[img_to_script](https://github.com/8bit-mate/img_to_script.rb)** gem. Instead of working with the img_to_script objects directly, just pass a hash with parameters. This is handy when you get the parameters as a JSON string, e.g. from a web front-end.
 
 ## Installation
 
@@ -30,6 +30,16 @@ ImgToScript::MK90ClientAPI.call(query) -> Array\<String\>
 
 Generated BASIC program.
 
+### Raises
+
+- **ImgToScript::MK90ClientAPI::QueryError**
+
+  A key is missing, has a value of an unsupported type, or has an illegal value.
+
+- **ImgToScript::MK90ClientAPI::InvalidImage**
+
+  Invalid image: the image can't be decoded from the base64 string.
+  
 ## Query description
 
 | Key           | Type          | Necessity | Description   | Allowed values
@@ -60,7 +70,8 @@ Generated BASIC program.
 ## Usage example
 
 ```ruby
-require "img_to_script-mk90_client_api"
+require "img_to_script/mk90_client_api"
+require "rmagick/bin_magick"
 
 def self.read_image(filename)
   img = Magick::BinMagick::Image.from_file(filename)
@@ -77,7 +88,7 @@ script = ImgToScript::MK90ClientAPI.call(
     image: read_image("my_image.png"),
     output_format: "bas",
     generator_options: {
-      y_offset: -5,
+      x_offset: -5,
       y_offset: -10
     },
     formatter_options: {
@@ -86,6 +97,8 @@ script = ImgToScript::MK90ClientAPI.call(
     }
   }
 )
+
+puts script
 ```
 
 ## Development

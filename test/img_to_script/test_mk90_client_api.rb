@@ -38,6 +38,28 @@ module ImgToScript
     end
 
     #
+    # :image key is a valid base64 string, but not a valid image.
+    #
+    def test_invalid_image
+      assert_raises ImgToScript::MK90ClientAPI::InvalidImage do
+        ImgToScript::MK90ClientAPI.call(
+          {
+            basic_version: "1.0",
+            encoding_method: "hex_mask_enhanced",
+            image: Base64.strict_encode64("this is not a valid image!"),
+            output_format: "bas"
+          }
+        )
+      end
+    end
+
+    def test_invalid_argument
+      assert_raises ImgToScript::MK90ClientAPI::QueryError do
+        ImgToScript::MK90ClientAPI.call("this is not a hash!")
+      end
+    end
+
+    #
     # Test minimal query - without optional generator & formatter config.
     # Symbolic keys.
     #

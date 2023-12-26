@@ -61,8 +61,13 @@ module ImgToScript
       #
       # @return [BinMagick::Image]
       #
+      # @raise [ImgToScript::MK90ClientAPI::InvalidImage]
+      #   Invalid image: the image can't be decoded from the base64 string.
+      #
       def _read_image(base64_string)
         _base64_to_img(base64_string)
+      rescue StandardError => e
+        raise InvalidImage, e.message
       end
 
       #

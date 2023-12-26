@@ -19,6 +19,8 @@ module ImgToScript
 
     class QueryError < Error; end
 
+    class InvalidImage < Error; end
+
     #
     # <Description>
     #

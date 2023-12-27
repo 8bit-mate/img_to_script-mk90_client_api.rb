@@ -3,6 +3,7 @@
 require "base64"
 require "dry/validation"
 require "img_to_script"
+require "rmagick"
 require "rmagick/bin_magick"
 require "zeitwerk"
 

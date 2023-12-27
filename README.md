@@ -71,6 +71,7 @@ Generated BASIC program.
 
 ```ruby
 require "img_to_script/mk90_client_api"
+require "rmagick"
 require "rmagick/bin_magick"
 
 def self.read_image(filename)

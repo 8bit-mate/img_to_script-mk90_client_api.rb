@@ -34,6 +34,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "dry-schema", "~> 1.13", ">= 1.13.3"
   spec.add_dependency "dry-validation", "~> 1.10", ">= 1.10.0"
   spec.add_dependency "img_to_script", "~> 1.0", ">= 1.0.0"
+  spec.add_dependency "rmagick", "~> 5.2", ">= 5.2.0"
   spec.add_dependency "rmagick-bin_magick", "~> 0.2", ">= 0.2.0"
   spec.add_dependency "zeitwerk", "~> 2.6", ">= 2.6.12"
 end

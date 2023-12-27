@@ -72,10 +72,9 @@ Generated BASIC program.
 ```ruby
 require "img_to_script/mk90_client_api"
 require "rmagick"
-require "rmagick/bin_magick"
 
 def self.read_image(filename)
-  img = Magick::BinMagick::Image.from_file(filename)
+  img = Magick::Image.read(filename).first
   img.colorspace = Magick::GRAYColorspace
   Base64.strict_encode64(
     img.to_blob

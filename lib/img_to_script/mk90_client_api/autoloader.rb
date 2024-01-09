@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "pathname"
+
 module ImgToScript
   module MK90ClientAPI
     #
